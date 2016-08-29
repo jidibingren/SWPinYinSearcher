@@ -95,13 +95,20 @@
 #pragma mark - searchBar delegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    dispatch_async(dispatch_queue_create("com.SWPinYinSearcher.textChange.queue", DISPATCH_QUEUE_SERIAL), ^{
-        // 搜索拼音和汉字（默认，无option）
-        self.tableData = [originalData searchPinYinWithKeyPath:@"name" searchString:searchText];
+//    dispatch_async(dispatch_queue_create("com.SWPinYinSearcher.textChange.queue", DISPATCH_QUEUE_SERIAL), ^{
+//        // 搜索拼音和汉字（默认，无option）
+//        self.tableData = [originalData searchPinYinWithKeyPath:@"name" searchString:searchText];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.tableView reloadData];
+//        });
+//    });
+    // 搜索拼音和汉字（默认，无option）
+    [originalData searchPinYinAsyncWithKeyPath:@"name" searchString:searchText callback:^(NSArray *results) {
+        self.tableData = results;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
-    });
+    }];
     [self.tableView reloadData];
 }
 
