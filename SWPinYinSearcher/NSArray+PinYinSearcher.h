@@ -46,4 +46,8 @@ typedef NS_OPTIONS(NSUInteger, SWPinyinSearchOptions) {
  */
 -(NSArray *)searchPinYinWithKeyPath:(NSString *)keyPath searchString:(NSString *)searchString searchOption:(SWPinyinSearchOptions)option;
 
+- (void)searchPinYinAsyncWithKeyPath:(NSString *)keyPath searchString:(NSString *)searchString callback:(void(^)(NSArray *results))callback;
+
+- (void)searchPinYinAsyncWithKeyPath:(NSString *)keyPath searchString:(NSString *)searchString searchOption:(SWPinyinSearchOptions)option callback:(void(^)(NSArray *results))callback;
+
 @end
