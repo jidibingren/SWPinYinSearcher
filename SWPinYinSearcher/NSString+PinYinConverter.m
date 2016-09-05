@@ -41,9 +41,16 @@ static NSDictionary *hanzi2pinyin;
 - (NSArray *)toPinyinArrayWithSeparator:(NSString *)separator isAcronym:(BOOL)isAcronym {
     NSMutableArray *allCharactersPinyins = [NSMutableArray array];
     [self setupHashtable];
-    for (int i=0; i<self.length; i++) {
+    for (int i = 0 ; i < self.length; i++) {
         NSString *pinyinString = hanzi2pinyin[[self substringWithRange:NSMakeRange(i, 1)]];
-        [allCharactersPinyins addObject:[pinyinString componentsSeparatedByString:@","]];
+        
+        if (pinyinString) {
+            
+            [allCharactersPinyins addObject:[pinyinString componentsSeparatedByString:@","]];
+            
+        }else{
+            [allCharactersPinyins addObject:[[self substringWithRange:NSMakeRange(i, 1)] componentsSeparatedByString:@","]];
+        }
     }
     int numberOfPinyinCombinations = 1;     // 所有可能组合的总数
     for (NSArray *oneCharPinyinArray in allCharactersPinyins) {
